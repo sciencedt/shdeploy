@@ -1,0 +1,37 @@
+{
+  "Resources" : {
+    "HelloLambdaRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": "HelloLambdaRole",
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        }
+      }
+    },
+
+    "HelloLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "FunctionName": "HelloLambdaFunction",
+        "Role": {
+          "Fn::GetAtt": ["HelloLambdaRole","Arn"]
+        },
+        "Runtime": "python3.7",
+        "Handler": "main.lambda_handler",
+        "Code": {
+            "S3Bucket" : "xyz123-deployment-archive",
+            "S3Key" : "lambda.zip"
+        }
+      }
+    }
+  }
+}

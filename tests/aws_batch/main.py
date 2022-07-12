@@ -1,6 +1,8 @@
 import os
 
-print('os environ:', os.environ)
+
+def handler(event, _):
+    print("got event: ", event)
 
 
 if __name__ == '__main__':

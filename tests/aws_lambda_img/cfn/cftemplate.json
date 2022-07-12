@@ -1,4 +1,11 @@
 {
+  "Parameters": {
+    "FunctionName": {
+            "Type": "String",
+            "Description": "Release Identifier",
+            "Default": "develop"
+        }
+  },
   "Resources" : {
     "HelloLambdaRole": {
       "Type": "AWS::IAM::Role",
@@ -21,14 +28,14 @@
     "HelloLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
-        "FunctionName": "HelloLambdaFunction",
+        "FunctionName": {"Ref":  "FunctionName"},
         "Role": {
           "Fn::GetAtt": ["HelloLambdaRole","Arn"]
         },
         "Runtime": "python3.7",
         "Handler": "main.lambda_handler",
         "Code": {
-            "S3Bucket" : "xyz123-deployment-archive",
+            "S3Bucket" : "rsavpc-deployment-archive",
             "S3Key" : "lambda.zip"
         }
       }

@@ -1,4 +1,4 @@
-import os
+import argparse
 
 
 def handler(event, _):
@@ -6,10 +6,10 @@ def handler(event, _):
 
 
 if __name__ == '__main__':
-    print("Aws Batch Started")
-    table_name = os.environ['table_name']
-    bucket_name = os.environ['bucket_name']
-    key = os.environ['key']
-    print("Aws Batch Started")
-    print(table_name, bucket_name, key)
-    print("Printing Payload", os.environ['payload'])
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument("--name", help="name of the job", type=str, default='default job')
+    args = vars(parser.parse_args())
+    print("Initial Arguments", args)
+    event = dict(body=args)
+    handler(event, {})
+

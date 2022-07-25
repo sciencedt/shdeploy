@@ -11,8 +11,8 @@ VPC = "rsavpc"
 REGION = 'us-east-1'
 BUCKET_NAME = f"{VPC}-deployment-archive"
 STACK_NAME = 'teststack'
-DELETE_STACK = False
-CREATE_OR_UPDATE = True
+DELETE_STACK = True
+CREATE_OR_UPDATE = False
 parameters = []
 with open('cfn/cfn.config') as file:
     props = dict(line.strip().split('=', 1) for line in file)

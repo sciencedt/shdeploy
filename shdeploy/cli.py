@@ -1,22 +1,19 @@
 import argparse
-import os
+from shdeploy.cfn_action import DeployAction
 
 
 def main() -> int:
-
     # Create the parser
     sh_parser = argparse.ArgumentParser(description='Deploy The artifact on AWS')
     # Add the arguments
-    sh_parser.add_argument('--template', metavar='--template', type=str, help='Path of the artifact')
-    sh_parser.add_argument('--cfg', metavar='--cfg', type=str, help='Path of the artifact')
-    sh_parser.add_argument('--stack', metavar='--stack', type=str, help='Cf stack')
+    sh_parser.add_argument('--build_path', metavar='--build_path', type=str, help='Path of the artifact')
+    sh_parser.add_argument('--stage', metavar='--stage', type=str, help='Cf stack')
     # Execute the parse_args() method
     args = sh_parser.parse_args()
-    artifact = args.artifact
-    template = args.templates
-    parameter_dict = dict()  # TODO will be loaded from parameter files
-    parameter_overrides = " ".join([f"{k}={v}" for k, v in parameter_dict.items()])
-    os.system(f"aws cloudformation deploy --template {template} --stack-name my-new-stack --parameter-overrides {parameter_overrides}")
+    build_path = args.build_path
+    stage = args.stage
+    deploy = DeployAction(build_path=build_path, stage=stage)
+    deploy.run_cmd()
     return 0
 
 

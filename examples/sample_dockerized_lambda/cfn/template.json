@@ -2,8 +2,11 @@
   "Parameters": {
     "FunctionName": {
             "Type": "String",
-            "Description": "Release Identifier",
-            "Default": "develop"
+            "Description": "Release Identifier"
+        },
+    "ImageUri": {
+            "Type": "String",
+            "Description": "Image URI"
         }
   },
   "Resources" : {
@@ -32,12 +35,8 @@
         "Role": {
           "Fn::GetAtt": ["HelloLambdaRole","Arn"]
         },
-        "Runtime": "python3.7",
-        "Handler": "main.lambda_handler",
-        "Code": {
-            "S3Bucket" : "rsavpc-deployment-archive",
-            "S3Key" : "lambda.zip"
-        }
+        "PackageType": "Image",
+        "Code": {"ImageUri":{"Ref":  "ImageUri"}}
       }
     }
   }
